@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>小曹音乐</title>
     <link rel="stylesheet" type="text/css" href="static/css/index.css">
+
     <!-- 新 Bootstrap4 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -12,378 +13,197 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>-->
+    <link href="static/css/animate.css" rel="stylesheet">
+    <link href="static/css/animate.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="header">
-    <div class="container">
-<!--        <a href="/" class="logo"></a>-->
-        <ul class="nav">
-            <li class="nav-active"><div>发现音乐</div></li>
-            <li><div>我的音乐</div></li>
-            <li><div>会员中心</div></li>
-        </ul>
-        <div class="header-login">
-            <span>登录</span>
-            <span>/</span>
-            <span>注册</span>
+    <div id="xiaocao">
+        <div class="header">
+            <div class="container">
+        <!--        <a href="/" class="logo"></a>-->
+                <ul class="nav">
+                    <li v-for="header in headers" v-bind:class="header.active"><div v-text="header.navName"></div></li>
+                </ul>
+                <div class="header-login">
+                    <span>登录</span>
+                    <span>/</span>
+                    <span>注册</span>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="menu">
+                <a href="javascript:;" v-for="menu in menus" v-bind:class="menu.active" v-text="menu.menu"></a>
+            </div>
+            <div class="banner">
+                <ul>
+                    <li v-for="banner in banners" v-bind:id="banner.id" class="banner-img"><img v-bind:src=banner.src width="100%" class="none" @load="fadeIn($event)"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mod">
+            <div class="container">
+                <div class="recommend-menu">
+                    <h3 class="menu-title font-weight-bold float-left">歌单推荐</h3>
+                </div>
+                <div class="menu">
+                    <a href="javascript:;" v-for="menu in recommendMenus" v-bind:class=menu.active v-text="menu.menu"></a>
+                </div>
+                <div class="recommend-list">
+                    <ul>
+                        <li v-for="list in recommendLists">
+                            <div>
+                                <a href="javascript:;" class="default-a">
+                                    <img v-bind:src=list.img class="none" @load="fadeIn($event)">
+                                </a>
+                            </div>
+                            <div class="recommend-list-title" v-text="list.title"></div>
+                            <div class="recommend-list-playNum"><span>播放量：</span><span v-text="list.playNum"></span></div>
+                        </li>
+                    </ul>
+            </div>
+            </div>
+        </div>
+        <div class="mod">
+            <div class="container">
+                <h3 class="menu-title font-weight-bold">歌单推荐</h3>
+                <div class="activity-list">
+                    <a href="javascript:;" v-for="img in activity"><img v-bind:src=img.img class="none" @load="fadeIn($event)"></a>
+                </div>
+            </div>
+        </div>
+        <div class="mod">
+            <div class="container">
+                <h3 class="menu-title font-weight-bold">排行榜</h3>
+                <div class="ranking">
+                    <ul>
+                        <li v-for="ranking in rankings">
+                            <div class="ranking-title">
+                                <img v-bind:src=ranking.rankingImg class="none" @load="fadeIn($event)">
+                                <div class="ranking-title-name" v-text="ranking.rankingName"></div>
+                            </div>
+                            <div class="ranking-list" v-for="list in ranking.rankingList">
+                               <div class="list">
+                                   <div v-bind:class="list.num" v-text="list.rank"></div>
+                                   <div class="ranking-music">
+                                       <div class="ranking-music-name" v-text="list.name"></div>
+                                       <div class="ranking-music-author" v-text="list.author"></div>
+                                   </div>
+                               </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container" v-text="footer">
+            </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="menu">
-        <a href="javascript:;" class="menu-active">推荐</a>
-        <a href="javascript:;">排行榜</a>
-        <a href="javascript:;">歌手</a>
-        <a href="javascript:;">歌单</a>
-        <a href="javascript:;">MV</a>
-    </div>
-    <div class="banner">
-        <ul>
-            <li id="banner-1" class="banner-img"><img src="static/img/1580525755117_.jpg" width="100%"></li>
-            <li id="banner-2" class="banner-img"><img src="static/img/1582425968768_.jpg" width="100%"></li>
-        </ul>
-<!--        <img src="static/img/1580525755117_.jpg" width="100%">-->
-    </div>
-</div>
-<div class="mod">
-    <div class="container">
-        <div class="recommend-menu">
-            <h3 class="menu-title font-weight-bold float-left">歌单推荐</h3>
-        </div>
-        <div class="menu">
-            <a href="javascript:;" class="menu-active">推荐</a>
-            <a href="javascript:;">排行榜</a>
-            <a href="javascript:;">歌手</a>
-            <a href="javascript:;">歌单</a>
-            <a href="javascript:;">MV</a>
-        </div>
-        <div class="recommend-list">
-        <ul>
-            <li>
-                <div>
-                    <a href="javascript:;" class="default-a">
-                        <img src="static/img/list-img.jpeg">
-                    </a>
-                </div>
-                <div class="recommend-list-title">2020年新歌首发</div>
-                <div class="recommend-list-playNum">播放量：1</div>
-            </li>
-            <li>
-                <div>
-                    <a href="javascript:;" class="default-a">
-                        <img src="static/img/list-img.jpeg">
-                    </a>
-                </div>
-                <div class="recommend-list-title">2020年新歌首发</div>
-                <div class="recommend-list-playNum">播放量：1</div>
-            </li>
-            <li>
-                <div>
-                    <a href="javascript:;" class="default-a">
-                        <img src="static/img/list-img.jpeg">
-                    </a>
-                </div>
-                <div class="recommend-list-title">2020年新歌首发</div>
-                <div class="recommend-list-playNum">播放量：1</div>
-            </li>
-            <li>
-                <div>
-                    <a href="javascript:;" class="default-a">
-                        <img src="static/img/list-img.jpeg">
-                    </a>
-                </div>
-                <div class="recommend-list-title">2020年新歌首发</div>
-                <div class="recommend-list-playNum">播放量：1</div>
-            </li>
-            <li>
-                <div>
-                    <a href="javascript:;" class="default-a">
-                        <img src="static/img/list-img.jpeg">
-                    </a>
-                </div>
-                <div class="recommend-list-title">2020年新歌首发</div>
-                <div class="recommend-list-playNum">播放量：1</div>
-            </li>
-        </ul>
-    </div>
-    </div>
-</div>
-<div class="mod">
-    <div class="container">
-        <h3 class="menu-title font-weight-bold">歌单推荐</h3>
-        <div class="activity-list">
-            <a href="javascript:;"><img src="static/img/activity.jpg"></a>
-            <a href="javascript:;"><img src="static/img/activity.jpg"></a>
-        </div>
-    </div>
-</div>
-<div class="mod">
-    <div class="container">
-        <h3 class="menu-title font-weight-bold">排行榜</h3>
-        <div class="ranking">
-            <ul>
-                <li>
-                    <div class="ranking-title">
-                        <img src="static/img/ranking-bg.jpg" alt="热歌榜">
-                        <div class="ranking-title-name font-width-bold">热歌榜</div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-1"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-2"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-3"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">4</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">5</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">6</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ranking-title">
-                        <img src="static/img/ranking-bg.jpg" alt="热歌榜">
-                        <div class="ranking-title-name font-width-bold">热歌榜</div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-1"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-2"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-3"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">4</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">5</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">6</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ranking-title">
-                        <img src="static/img/ranking-bg.jpg" alt="热歌榜">
-                        <div class="ranking-title-name font-width-bold">热歌榜</div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-1"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-2"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-3"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">4</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">5</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">6</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ranking-title">
-                        <img src="static/img/ranking-bg.jpg" alt="热歌榜">
-                        <div class="ranking-title-name">热歌榜</div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-1"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-2"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num-3"></div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">4</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">5</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="ranking-list">
-                       <div class="list">
-                           <div class="ranking-num">6</div>
-                           <div class="ranking-music">
-                               <div class="ranking-music-name">晴天</div>
-                               <div class="ranking-music-author">周杰伦</div>
-                           </div>
-                       </div>
-                    </div>
-                </li>
-<!--                <li>-->
-<!--                    <div class="ranking-title">新歌榜</div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <div class="ranking-title">飙升榜</div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <div class="ranking-title">热歌榜</div>-->
-<!--                </li>-->
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="footer">
-    <div class="container">
-        © 2020-2020 music.xiaocaotongxue.top 版权所有
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        // $("#banner-2").addClass("banner-active");
-    })
-</script>
+    <script>
+        $(document).ready(function () {
+            // $("#banner-2").addClass("banner-active");
+        })
+    </script>
+    <script>
+        new Vue({
+            el:'#xiaocao',
+            data:{
+                headers:[
+                    {navName:'发现音乐',active:'nav-active'},
+                    {navName:'我的音乐'},
+                    {navName:'会员中心'}
+                ],
+                menus:[
+                    {menu:'推荐',active:'menu-active'},
+                    {menu:'排行榜'},
+                    {menu:'歌手'},
+                    {menu:'歌单'},
+                    {menu:'MV'}
+                ],
+                banners:[
+                    {id:'banner-1',src:'static/img/1580525755117_.jpg'},
+                    {id:'banner-2',src:'static/img/1582425968768_.jpg'},
+                ],
+                recommendMenus:[
+                    {menu:'热门',active:'menu-active'},
+                    {menu:'欢快'},
+                    {menu:'静心'},
+                    {menu:'国风'},
+                ],
+                recommendLists:[
+                    {img:'static/img/list-img.jpeg',title:'2020年新歌首发',playNum:1},
+                    {img:'static/img/list-img.jpeg',title:'2020年新歌首发',playNum:1},
+                    {img:'static/img/list-img.jpeg',title:'2020年新歌首发',playNum:1},
+                    {img:'static/img/list-img.jpeg',title:'2020年新歌首发',playNum:1},
+                    {img:'static/img/list-img.jpeg',title:'2020年新歌首发',playNum:1},
+                ],
+                activity:[
+                    {img:'static/img/activity.jpg'},
+                    {img:'static/img/activity.jpg'},
+                ],
+                rankings:[
+                    {rankingName:'热歌榜',rankingImg:'static/img/ranking-bg.jpg',
+                        rankingList:[
+                            {num:'ranking-num-1',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-2',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-3',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'4',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'5',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'6',name:'晴天',author:'周杰伦'},
+                        ]},
+                    {rankingName:'新歌榜',rankingImg:'static/img/ranking-bg.jpg',
+                        rankingList:[
+                            {num:'ranking-num-1',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-2',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-3',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'4',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'5',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'6',name:'晴天',author:'周杰伦'},
+                        ]},
+                    {rankingName:'飙升榜',rankingImg:'static/img/ranking-bg.jpg',
+                        rankingList:[
+                            {num:'ranking-num-1',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-2',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-3',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'4',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'5',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'6',name:'晴天',author:'周杰伦'},
+                        ]},
+                    {rankingName:'外语榜',rankingImg:'static/img/ranking-bg.jpg',
+                        rankingList:[
+                            {num:'ranking-num-1',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-2',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num-3',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'4',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'5',name:'晴天',author:'周杰伦'},
+                            {num:'ranking-num',rank:'6',name:'晴天',author:'周杰伦'},
+                        ]},
+                ],
+                footer:'© 2020-2020 music.xiaocaotongxue.top 版权所有',
+                show:false,
+            },
+            // mounted:function () {
+            //     // this.show=true;
+            //     this.timer = setTimeout(()=>{   //设置延迟执行
+            //         this.show=true;
+            //     },500);
+            // },
+            methods: {
+                fadeIn:function (e) {
+                    var dis=e.target;
+                    this.timer = setTimeout(()=>{   //设置延迟执行
+                        $(dis).fadeIn();
+                    },500);
+                    // e.target.style.display="block";
+                }
+            }
+
+        })
+    </script>
 </body>
 </html>
