@@ -24,6 +24,12 @@ ul{
     min-width: 1180px;
     max-width: 1640px;
 }
+.none{
+    display: none;
+}
+.display{
+    display: block;
+}
 .header{
     width: 100%;
     height: 70px;
@@ -104,6 +110,9 @@ ul{
     height: auto;
     overflow: hidden;
     padding-bottom: 20px;
+}
+.banner:before{
+    background-image: url("../img/1580525755117_.jpg");
 }
 .banner ul{
     /*position: relative;*/
